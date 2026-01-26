@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioacústica Serra Amolar</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Ajuste para o mapa não sobrepor o modal */
+        #map { z-index: 1; border-radius: 8px; }
+        
+        /* Estilização do player e cards */
+        #waveform-spectrogram {
+            height: 128px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        
+        /* Badges e Botões */
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge-green { background: #d1fae5; color: #065f46; }
+        .badge-blue { background: #dbeafe; color: #1e40af; }
+
+        .categoria-btn { transition: all 0.3s ease; }
+        .categoria-btn.active {
+            background-color: #16a34a !important;
+            color: white !important;
+            border-color: #16a34a !important;
+        }
+        .categoria-btn:not(.active):hover {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100">
+
+    <header class="bg-emerald-600 shadow-md border-b-4 border-orange-200">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center gap-6">
+            
+            <div class="flex-shrink-0">
+                <img src="ihp_logo.png" alt="Instituto Homem Pantaneiro" class="h-24 w-auto">
+            </div>
+
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl md:text-4xl font-bold text-zinc-900 tracking-tight">Bioacústica Serra do Amolar</h1>
+                <div class="flex items-center justify-center md:justify-start gap-2 mt-1">
+                    <span class="inline-block w-2 h-2 bg-red-700 rounded-full animate-pulse"></span>
+                    <p class="text-stone-100 font-medium text-lg">Acervo Digital da Biodiversidade</p>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Categorias</h2>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="filtrar('todos')" class="categoria-btn active bg-white text-gray-700 border-2 border-gray-300 py-2 px-6 rounded-lg font-semibold" data-categoria="todos">
+                    Todos
+                </button>
+                <button onclick="filtrar('Anfibios')" class="categoria-btn bg-white text-gray-700 border-2 border-gray-300 py-2 px-6 rounded-lg font-semibold" data-categoria="Anfibios">
+                    Anfíbios
+                </button>
+                <button onclick="filtrar('Aves')" class="categoria-btn bg-white text-gray-700 border-2 border-gray-300 py-2 px-6 rounded-lg font-semibold" data-categoria="Aves">
+                    Aves
+                </button>
+                <button onclick="filtrar('Mamiferos')" class="categoria-btn bg-white text-gray-700 border-2 border-gray-300 py-2 px-6 rounded-lg font-semibold" data-categoria="Mamiferos">
+                    Mamíferos
+                </button>
+                <button onclick="filtrar('Insetos')" class="categoria-btn bg-white text-gray-700 border-2 border-gray-300 py-2 px-6 rounded-lg font-semibold" data-categoria="Insetos">
+                    Insetos
+                </button>
+            </div>
+        </div>
+
+        <div id="grid-especies" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            </div>
+
+        <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="bg-emerald-600 text-white p-6 flex justify-between items-center sticky top-0 z-10">
+                    <h2 id="modal-titulo" class="text-2xl font-bold"></h2>
+                    <button onclick="fecharModal()" class="text-2xl hover:opacity-75">&times;</button>
+                </div>
+                
+                <div class="p-8">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <img id="modal-imagem" src="" alt="" class="w-full h-64 object-cover rounded-lg shadow-md">
+                        </div>
+
+                        <div id="map-section" class="hidden">
+                            <h3 class="text-sm font-bold text-gray-800 mb-2">📍 Pontos de Registro</h3>
+                            <div id="map" style="height: 180px; border-radius: 8px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <p id="modal-cientifico" class="text-lg text-green-600 italic mb-4"></p>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                                <p class="text-xs font-semibold text-blue-900 mb-1">Status de Conservação</p>
+                                <p id="modal-status" class="text-blue-700 font-semibold text-sm"></p>
+                            </div>
+                            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-4 rounded">
+                                <p class="text-xs font-semibold text-amber-900 mb-1">Pontos de Registro</p>
+                                <p id="modal-ocorrencias" class="text-amber-700 font-semibold text-sm"></p>
+                            </div>
+                        </div>
+
+                        <div id="audio-section" class="hidden">
+                            <h4 class="text-sm font-bold text-gray-800 mb-2">🎧 Vocalização</h4>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <div id="waveform-spectrogram" style="height: 128px; background: #ffffff; border-radius: 8px; position: relative; border: 1px solid #e5e7eb;"></div>
+
+                                <div class="flex items-center justify-between mt-3">
+                                    <div class="flex items-center gap-3">
+                                        <button id="play-btn" onclick="toggleAudio()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold transition flex items-center gap-2 text-sm">
+                                            <span id="play-icon">▶</span>
+                                            <span id="play-text">Play</span>
+                                        </button>
+
+                                        <div class="flex items-center gap-2">
+                                            <label for="speed-control" class="text-xs text-gray-600">Velocidade:</label>
+                                            <select id="speed-control" onchange="alterarVelocidade(this.value)" class="text-xs border border-gray-300 rounded px-2 py-1 bg-white">
+                                                <option value="0.5">0.5x</option>
+                                                <option value="0.75">0.75x</option>
+                                                <option value="1" selected>1x</option>
+                                                <option value="1.25">1.25x</option>
+                                                <option value="1.5">1.5x</option>
+                                                <option value="2">2x</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span id="tempo-audio" class="text-gray-700 text-sm font-mono">00:00 / 00:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">Sobre a Espécie</h3>
+                        <p id="modal-descricao" class="text-gray-700 leading-relaxed text-sm"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p>Projeto de Catalogação de Bioacústica - Serra Amolar, Pantanal</p>
+            <p class="text-sm mt-2">Dados | Imagens | Áudios</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Estado Global
+        let dados = null;
+        let filtroAtual = 'todos';
+        let wavesurfer = null;
+        let mapaAtual = null;
+        let especieSelecionada = null;
+
+        const statusConservacao = {
+            'LC': 'Pouco Preocupante',
+            'NT': 'Quase Ameaçada',
+            'VU': 'Vulnerável',
+            'EN': 'Em Perigo',
+            'CR': 'Criticamente em Perigo',
+            'DD': 'Dados Insuficientes',
+            'NA': 'Não Avaliado'
+        };
+
+        const classesCorrigidas = {
+            'Anfibios': 'Anfíbios',
+            'Mamiferos': 'Mamíferos',
+            'Insetos': 'Insetos',
+            'Aves': 'Aves'
+        };
+
+        async function carregarDados() {
+            try {
+                const response = await fetch('./dados_web/especies_data.json');
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                dados = await response.json();
+                
+                if (!dados.especies || !dados.pontos) {
+                    throw new Error('Estrutura de JSON inválida');
+                }
+                
+                renderizar();
+            } catch (erro) {
+                console.error('Erro ao carregar dados:', erro);
+                document.getElementById('grid-especies').innerHTML = `
+                    <div class="col-span-full text-center p-8 bg-red-50 rounded-lg">
+                        <p class="text-red-700 font-bold">Erro ao carregar dados!</p>
+                        <p class="text-red-600 text-sm mt-2">${erro.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderizar() {
+            const grid = document.getElementById('grid-especies');
+            grid.innerHTML = '';
+
+            let especiesLista = dados.especies;
+
+            if (filtroAtual !== 'todos') {
+                const classeFormatada = classesCorrigidas[filtroAtual] || filtroAtual;
+                especiesLista = especiesLista.filter(e => e.classe === classeFormatada);
+            }
+
+            atualizarBotoesFiltro();
+
+            if (especiesLista.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center p-12 bg-amber-50 rounded-lg">
+                        <p class="text-amber-700 font-bold text-lg">Nenhuma espécie encontrada nesta categoria</p>
+                    </div>
+                `;
+                return;
+            }
+
+            especiesLista.forEach(especie => {
+                const card = document.createElement('div');
+                card.className = 'card-hover bg-white rounded-xl shadow-md overflow-hidden cursor-pointer';
+                card.onclick = () => abrirModal(especie);
+
+                card.innerHTML = `
+                    <div class="h-56 bg-gray-200 overflow-hidden">
+                        ${especie.imagemUrl ?
+                            `<img src="${especie.imagemUrl}" alt="${especie.nomePopular}" class="w-full h-full object-cover">` :
+                            `<div class="w-full h-full flex items-center justify-center text-gray-400">Sem imagem</div>`
+                        }
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">${especie.nomePopular}</h3>
+                        <p class="text-sm text-green-600 italic mb-3">${especie.nomeCientifico}</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="badge badge-blue">${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos de gravação</span>
+                            ${especie.audioUrl ? '<span class="badge badge-green">Áudio</span>' : ''}
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function atualizarBotoesFiltro() {
+            document.querySelectorAll('.categoria-btn').forEach(btn => {
+                const categoria = btn.dataset.categoria;
+                if (categoria === filtroAtual) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function filtrar(categoria) {
+            filtroAtual = categoria;
+            renderizar();
+        }
+
+        function abrirModal(especie) {
+            especieSelecionada = especie;
+            
+            document.getElementById('modal-titulo').textContent = especie.nomePopular;
+            document.getElementById('modal-cientifico').textContent = `${especie.nomeCientifico}`;
+            document.getElementById('modal-status').textContent = statusConservacao[especie.statusConservacao] || especie.statusConservacao;
+            document.getElementById('modal-ocorrencias').textContent = `${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos de gravação`;
+            document.getElementById('modal-descricao').textContent = especie.descricao;
+            
+            const img = document.getElementById('modal-imagem');
+            if (especie.imagemUrl) {
+                img.src = especie.imagemUrl;
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+            }
+
+            const audioSection = document.getElementById('audio-section');
+            if (especie.audioUrl) {
+                audioSection.classList.remove('hidden');
+                inicializarWaveform(especie.audioUrl);
+            } else {
+                audioSection.classList.add('hidden');
+            }
+
+            const mapSection = document.getElementById('map-section');
+            if (especie.pontosRegistro && especie.pontosRegistro.length > 0) {
+                mapSection.classList.remove('hidden');
+                setTimeout(() => inicializarMapa(especie), 100);
+            } else {
+                mapSection.classList.add('hidden');
+            }
+
+            document.getElementById('modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            if (wavesurfer) wavesurfer.pause();
+            if (mapaAtual) {
+                mapaAtual.remove();
+                mapaAtual = null;
+            }
+        }
+
+        function inicializarWaveform(audioUrl) {
+            const container = document.getElementById('waveform-spectrogram');
+            if (wavesurfer) {
+                wavesurfer.destroy();
+                wavesurfer = null;
+            }
+            container.innerHTML = '';
+
+            try {
+                // Waveform AZUL com fundo BRANCO
+                wavesurfer = WaveSurfer.create({
+                    container: '#waveform-spectrogram',
+                    waveColor: ['#1e3a8a', '#1d4ed8', '#3b82f6', '#93c5fd'], 
+                    progressColor: 'rgba(30, 58, 138, 0.2)', 
+                    cursorColor: '#1e3a8a', 
+                    cursorWidth: 2,
+                    height: 128,
+                    url: audioUrl,
+                    normalize: true,
+                    interact: true,
+                    hideScrollbar: true,
+                    dragToSeek: true
+                });
+
+                wavesurfer.on('ready', atualizarTempoAudio);
+                wavesurfer.on('timeupdate', atualizarTempoAudio);
+                wavesurfer.on('play', () => {
+                    document.getElementById('play-icon').textContent = '⏸';
+                    document.getElementById('play-text').textContent = 'Pause';
+                });
+                wavesurfer.on('pause', () => {
+                    document.getElementById('play-icon').textContent = '▶';
+                    document.getElementById('play-text').textContent = 'Play';
+                });
+                wavesurfer.on('finish', () => {
+                    document.getElementById('play-icon').textContent = '▶';
+                    document.getElementById('play-text').textContent = 'Play';
+                });
+
+            } catch (e) {
+                console.error('Erro ao inicializar player:', e);
+                container.innerHTML = '<div class="text-gray-400 text-xs p-4 text-center">Erro ao inicializar player</div>';
+            }
+        }
+
+        function alterarVelocidade(velocidade) {
+            if (wavesurfer) {
+                wavesurfer.setPlaybackRate(parseFloat(velocidade));
+            }
+        }
+
+        function toggleAudio() {
+            if (wavesurfer) wavesurfer.playPause();
+        }
+
+        function atualizarTempoAudio() {
+            const timeDisplay = document.getElementById('tempo-audio');
+            let current = 0;
+            let duration = 0;
+            if (wavesurfer) {
+                current = Math.floor(wavesurfer.getCurrentTime() || 0);
+                duration = Math.floor(wavesurfer.getDuration() || 0);
+            }
+            const formatTime = (s) => {
+                if (isNaN(s) || s < 0) return '00:00';
+                const m = Math.floor(s / 60);
+                const sec = Math.floor(s % 60);
+                return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+            };
+            timeDisplay.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+        }
+
+        function inicializarMapa(especie) {
+            const mapContainer = document.getElementById('map');
+            if (mapaAtual) mapaAtual.remove();
+            
+            // Focando aproximadamente no Pantanal
+            mapaAtual = L.map(mapContainer).setView([-19.225, -56.423], 11);
+            
+            // Satélite
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri',
+                maxZoom: 18
+            }).addTo(mapaAtual);
+
+            // Adicionar marcadores baseados na lista de IDs da espécie
+            const puntosRegistro = dados.pontos.filter(p => especie.pontosRegistro.includes(p.id));
+            
+            puntosRegistro.forEach(ponto => {
+                const marker = L.circleMarker([ponto.lat, ponto.lng], {
+                    radius: 8,
+                    fillColor: '#10b981',
+                    color: '#059669',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(mapaAtual);
+
+                marker.bindPopup(`
+                    <div style="font-weight: bold;">${ponto.nome}</div>
+                    <div style="font-size: 12px; color: #666;">${ponto.descricao || ''}</div>
+                `);
+            });
+
+            if (puntosRegistro.length > 0) {
+                const bounds = L.latLngBounds(puntosRegistro.map(p => [p.lat, p.lng]));
+                mapaAtual.fitBounds(bounds, {
+                    padding: [50, 50],
+                    maxZoom: 13
+                });
+            }
+
+            setTimeout(() => {
+                mapaAtual.invalidateSize();
+            }, 100);
+        }
+
+        window.addEventListener('load', carregarDados);
+    </script>
+
+</body>
+</html>

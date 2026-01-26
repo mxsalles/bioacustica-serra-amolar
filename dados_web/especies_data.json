@@ -1,0 +1,336 @@
+{
+  "metadata": {
+    "projeto": "Bioacústica Serra Amolar",
+    "local": "RPPN Serra do Amolar, Pantanal",
+    "total_especies": 21,
+    "data_exportacao": "2026-01-20T16:25:02.191413"
+  },
+  "pontos": [
+    {
+      "id": "75",
+      "nome": "Ponto 75 - Córrego",
+      "descricao": "200 metros próximo ao córrego antes da piscina natural.",
+      "lat": -17.87480526,
+      "lng": -57.5555759
+    },
+    {
+      "id": "74",
+      "nome": "Ponto 74 - Trilha Piscina",
+      "descricao": "Final da Trilha da Piscina natural, Córrego próximo.",
+      "lat": -17.87761,
+      "lng": -57.55357971
+    },
+    {
+      "id": "73",
+      "nome": "Ponto 73 - Trilha Zogue-Zogue",
+      "descricao": "Baía da Trilha Zogue - Boca d’água.",
+      "lat": -17.8375,
+      "lng": -57.5565
+    },
+    {
+      "id": "76",
+      "nome": "Ponto 76 - Baía Acurizal",
+      "descricao": "Baía da Acurizal.",
+      "lat": -17.834007,
+      "lng": -57.561217
+    }
+  ],
+  "especies": [
+    {
+      "id": "boana_raniceps",
+      "nomePopular": "Boana raniceps",
+      "nomeCientifico": "Boana raniceps",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Boana raniceps é uma espécie de anfíbio da família Hylidae. Pode ser encontrada na Argentina, Paraguai, Bolívia, Brasil, Colômbia, Venezuela e Guiana Francesa.",
+      "imagemUrl": "imagens_especies/boana_raniceps.jpg",
+      "audioUrl": "audio_especies/boana_raniceps.mp3",
+      "pontosRegistro": [
+        "73"
+      ],
+      "ocorrencias": 22
+    },
+    {
+      "id": "chauna_torquata",
+      "nomePopular": "Tochã-cinzenta",
+      "nomeCientifico": "Chauna torquata",
+      "classe": "Aves",
+      "statusConservacao": "LC",
+      "descricao": "A tachã (Chauna torquata), é uma ave anseriforme da família dos anhimídeos, natural das regiões da Argentina e Bolívia até a região Sul do Brasil. Tais aves medem cerca de 80 cm de comprimento, com pernas vermelhas, plumagens pardo-acinzentadas, pescoço com gola negra e estreito círculo branco.",
+      "imagemUrl": "imagens_especies/chauna_torquata.jpg",
+      "audioUrl": "audio_especies/chauna_torquata.mp3",
+      "pontosRegistro": [
+        "73",
+        "76"
+      ],
+      "ocorrencias": 10
+    },
+   {
+      "id": "crypturellus_undulatus",
+      "nomePopular": "Jaó",
+      "nomeCientifico": "Crypturellus undulatus",
+      "classe": "Aves",
+      "statusConservacao": "LC",
+      "descricao": "Crypturellus undulatus, popularmente jaó jaó-vermiculado, macucau, macucauá ou sururina, é uma espécie de ave tinamiforme típica do cerrado do Brasil Central. O jaó e suas subespécies habitam matas abertas e cerrados no Brasil.",
+      "imagemUrl": "imagens_especies/crypturellus_undulatus.jpg",
+      "audioUrl": "audio_especies/crypturellus_undulatus.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 42
+    },
+    {
+      "id": "dendropsophus_nanus",
+      "nomePopular": "Perereca-anã",
+      "nomeCientifico": "Dendropsophus nanus",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Dendropsophus nanus é uma espécie de anura da família Hylidae. Apresentam tamanho pequeno, de 1,8 a 2,4 cm. O corpo é alongado e a coloração dorsal alaranjada, cinzenta ou castanho-amarelado, com pequenos pontos escuros distribuídos longitudinalmente. O ventre tem cor clara. ",
+      "imagemUrl": "imagens_especies/dendropsophus_nanus.jpg",
+      "audioUrl": "audio_especies/dendropsophus_nanus.mp3",
+      "pontosRegistro": [
+        "73",
+        "76"
+      ],
+      "ocorrencias": 56
+    },
+    {
+      "id": "dermatonotus_muelleri",
+      "nomePopular": "Sapo-bode",
+      "nomeCientifico": "Dermatonotus muelleri",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Dermatonotus muelleri é uma espécie de anfíbio da família Microhylidae. É a única espécie descrita para o género Dermatonotus. Pode ser encontrada na Argentina, Bolívia, Brasil e Paraguai. Tanto machos como fêmeas adultos constroem abrigos subterrâneos e realizam estivação durante a estação seca.",
+      "imagemUrl": "imagens_especies/dermatonotus_muelleri.jpg",
+      "audioUrl": "audio_especies/dermatonotus_muelleri.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 12
+    },
+    {
+      "id": "elachistocleis_bicolor",
+      "nomePopular": "Sapinho-guarda",
+      "nomeCientifico": "Elachistocleis bicolor",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Espécie registrada na região da Serra Amolar, Pantanal. apresentam dimensões corporais variando entre 2,0 e 5,0 cm. Sua morfologia compreende um corpo ovóide, cabeça de formato pequeno e triangular, e dorso colorido em tonalidades que variam de castanho-escuro a castanho-amarelado, acompanhado por uma listra branca a amarelo-clara que se estende longitudinalmente do nariz até a região do uróstilo.",
+      "imagemUrl": "imagens_especies/elachistocleis_bicolor.jpg",
+      "audioUrl": "audio_especies/elachistocleis_bicolor.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 3
+    },
+    {
+      "id": "leptodactylus_fuscus",
+      "nomePopular": "Rã-assobiadora",
+      "nomeCientifico": "Leptodactylus fuscus",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "A Leptodactylus fuscus (Schneider, 1799), também conhecida como rã-assobiadora ou rã-assovio, é um anfíbio anuro da família Leptodactylidae, pertencente ao gênero Leptodactylus, possui ampla distribuição na América do Sul, incluindo o Brasil.",
+      "imagemUrl": "imagens_especies/leptodactylus_fuscus.jpg",
+      "audioUrl": "audio_especies/leptodactylus_fuscus.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 44
+    },
+    {
+      "id": "leptodactylus_mystacinus",
+      "nomePopular": "Rã-estriada",
+      "nomeCientifico": "Leptodactylus mystacinus",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Leptodactylus mystacinus é uma espécie de anfíbio  da família Leptodactylidae.",
+      "imagemUrl": "imagens_especies/leptodactylus_mystacinus.jpg",
+      "audioUrl": "audio_especies/leptodactylus_mystacinus.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 73
+    },
+    {
+      "id": "leptodactylus_podicipinus",
+      "nomePopular": "Rã do ventre salpicado",
+      "nomeCientifico": "Leptodactylus podicipinus",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Leptodactylus podicipinus é uma espécie de anfíbio  da família Leptodactylidae.",
+      "imagemUrl": "imagens_especies/leptodactylus_podicipinus.jpg",
+      "audioUrl": "audio_especies/leptodactylus_podicipinus.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 25
+    },
+    {
+      "id": "lysapsus_limellum",
+      "nomePopular": "Lysapsus limellum",
+      "nomeCientifico": "Lysapsus limellum",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Lysapsus limellum é uma espécie de anfíbio da família Hylidae. Pode ser encontrada na Bolívia, Paraguai, Brasil, Argentina e Uruguai.",
+      "imagemUrl": "imagens_especies/lysapsus_limellum.jpg",
+      "audioUrl": "audio_especies/lysapsus_limellum.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 21
+    },
+    {
+      "id": "megascops_choliba",
+      "nomePopular": "Corujinha-do-mato",
+      "nomeCientifico": "Megascops choliba",
+      "classe": "Aves",
+      "statusConservacao": "LC",
+      "descricao": "Corujinha-sul-americana ou corujinha-do-mato (Megascops choliba) é uma espécie de ave da família Strigidae.",
+      "imagemUrl": "imagens_especies/megascops_choliba.jpg",
+      "audioUrl": "audio_especies/corujinha.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 17
+    },
+    {
+      "id": "nyctibius_griseus",
+      "nomePopular": "Urutau-comum",
+      "nomeCientifico": "Nyctibius griseus",
+      "classe": "Aves",
+      "statusConservacao": "LC",
+      "descricao": "O urutau ou urutau-comum (Nyctibius griseus) é uma ave noturna pertencente à família Nyctibiidae. Foi descrita pela primeira vez pelo naturalista Johann Friedrich Gmelin com base em espécimes coletados nas Américas e enviados para a Europa, já que o autor nunca visitou o continente americano pessoal...",
+      "imagemUrl": "imagens_especies/nyctibius_griseus.png",
+      "audioUrl": "audio_especies/nyctibius_griseus.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 2
+    },
+    {
+      "id": "nyctidromus_albicollis",
+      "nomePopular": "Bacurau-comum",
+      "nomeCientifico": "Nyctidromus albicollis",
+      "classe": "Aves",
+      "statusConservacao": "LC",
+      "descricao": "Noitibó-pauraque, bacurau-comum ou curiango-comum (Nyctidromus albicollis) é uma ave da família Caprimulgidae. Bastante comum, distribui-se desde o sul do México até o nordeste da Argentina. A plumagem tem uma coloração pardo-amarelada finamente pintada de preto e com manchas pretas maiores, rêmiges...",
+      "imagemUrl": "imagens_especies/nyctidromus_albicollis.jpg",
+      "audioUrl": "audio_especies/nyctidromus_albicollis.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 422
+    },
+    {
+      "id": "plecturocebus_pallescens",
+      "nomePopular": "Macaco-boca-d'água",
+      "nomeCientifico": "Plecturocebus pallescens",
+      "classe": "Mamíferos",
+      "statusConservacao": "LC",
+      "descricao": "Formam um grupo diverso de espécies conhecidas, popularmente, por sauás, guigós ou boca-d'água. Encontrado na região do Chaco, ocorrendo em áreas de Mato Grosso do Sul (Brasil), Paraguai e Bolívia. É um animal pequeno, adaptado a florestas e cerrado, com hábitos arborícolas, que vive em grupos familiares e alimenta-se de frutos, folhas e insetos. ",
+      "imagemUrl": "imagens_especies/plecturocebus_pallescens.png",
+      "audioUrl": "audio_especies/bocadagua.mp3",
+      "pontosRegistro": [
+        "73"        
+      ],
+      "ocorrencias": 10
+    },
+    {
+      "id": "physalaemus_albonotatus",
+      "nomePopular": "Physalaemus albonotatus",
+      "nomeCientifico": "Physalaemus albonotatus",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Physalaemus albonotatus é uma espécie de anfíbio da família Leptodactylidae.",
+      "imagemUrl": "imagens_especies/physalaemus_albonotatus.jpg",
+      "audioUrl": "audio_especies/physalaemus_albonotatus.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 38
+    },
+    {
+      "id": "pseudis_platensis",
+      "nomePopular": "Pseudis platensis",
+      "nomeCientifico": "Pseudis platensis",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Pseudis platensis é uma espécie de anfíbio da família Hylidae. Pode ser encontrada na Argentina, Paraguai, Bolívia e Brasil.",
+      "imagemUrl": "imagens_especies/pseudis_platensis.jpg",
+      "audioUrl": "audio_especies/pseudis_platensis.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 12
+    },
+    {
+      "id": "scinax_acuminatus",
+      "nomePopular": "Scinax acuminatus",
+      "nomeCientifico": "Scinax acuminatus",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Scinax acuminatus é uma espécie de anfíbio da família Hylidae. Pode ser encontrada na Argentina, Brasil, Paraguai e Bolívia.",
+      "imagemUrl": "imagens_especies/scinax_acuminatus.jpg",
+      "audioUrl": "audio_especies/scinax_acuminatus.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 26
+    },
+    {
+      "id": "scinax_nasicus",
+      "nomePopular": "Perereca-raspa-cuia",
+      "nomeCientifico": "Scinax nasicus",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Scinax nasicus é uma espécie de anfíbio da família Hylidae. Pode ser encontrada na Argentina, Uruguai, Brasil, Paraguai e Bolívia.",
+      "imagemUrl": "imagens_especies/scinax_nasicus.jpeg",
+      "audioUrl": "audio_especies/scinax_nasicus.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 3
+    },
+    {
+      "id": "setopagis_parvula",
+      "nomePopular": "Bacurau-pequeno",
+      "nomeCientifico": "Setopagis parvula",
+      "classe": "Aves",
+      "statusConservacao": "LC",
+      "descricao": "O bacurau-chintã ou bacurau-pequeno (Setopagis parvula) é uma espécie de bacurau que habita da Venezuela à Bolívia,  bem como a Argentina e o Brasil. Tais aves medem cerca de 20 cm de comprimento, possuindo coloração escura, garganta com manchas negras e brancas, asas com largas faixas brancas, e ca...",
+      "imagemUrl": "imagens_especies/setopagis_parvula.jpg",
+      "audioUrl": "audio_especies/setopagis_parvula.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 56
+    },
+    {
+      "id": "trachycephalus_typhonius",
+      "nomePopular": "Perereca-grudenta",
+      "nomeCientifico": "Trachycephalus typhonius",
+      "classe": "Anfíbios",
+      "statusConservacao": "LC",
+      "descricao": "Trachycephalus typhonius é uma espécie de anfíbio da família Hylidae. Pode ser encontrada do México ao norte da Argentina. Seu ninho é construído com uma espécie de resina, que, quando queimada, produz uma fumaça aromática. Também é conhecido pelo nome de sapo-cunauaru.",
+      "imagemUrl": "imagens_especies/trachycephalus_typhonius.jpg",
+      "audioUrl": "audio_especies/trachycephalus_typhonius.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 5
+    },
+    {
+      "id": "vanellus_chilensis",
+      "nomePopular": "Quero-quero",
+      "nomeCientifico": "Vanellus chilensis",
+      "classe": "Aves",
+      "statusConservacao": "LC",
+      "descricao": "O quero-quero (Brasil) ou abibe-do-sul (Portugal) (nome científico: Vanellus chilensis (Molina, 1782)), também conhecido por tetéu, téu-téu, teréu-teréu e terém-terém, é uma ave da ordem dos Charadriiformes, pertencendo à família dos Charadriidae. Em castelhano é conhecido por tero ou tero-tero, e e...",
+      "imagemUrl": "imagens_especies/vanellus_chilensis.jpg",
+      "audioUrl": "audio_especies/vanellus_chilensis.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 20
+    }
+  ]
+}

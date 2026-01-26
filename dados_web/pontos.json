@@ -1,0 +1,30 @@
+[
+  {
+    "id": "75",
+    "nome": "Ponto 75 - Córrego",
+    "descricao": "200 metros próximo ao córrego antes da piscina natural.",
+    "lat": -17.87480526,
+    "lng": -57.5555759
+  },
+  {
+    "id": "74",
+    "nome": "Ponto 74 - Trilha Piscina",
+    "descricao": "Final da Trilha da Piscina natural, Córrego próximo.",
+    "lat": -17.87761,
+    "lng": -57.55357971
+  },
+  {
+    "id": "73",
+    "nome": "Ponto 73 - Baía Zogue",
+    "descricao": "Baía da Trilha Zogue-Zogue - Boca d’água.",
+    "lat": -17.8375,
+    "lng": -57.5565
+  },
+  {
+    "id": "76",
+    "nome": "Ponto 76 - Baía Acurizal",
+    "descricao": "Baía da Acurizal.",
+    "lat": -17.834007,
+    "lng": -57.561217
+  }
+]

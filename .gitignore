@@ -21,3 +21,7 @@ Thumbs.db
 # Arquivos temporários
 *.tmp
 *.bak
+
+# Logos
+ihp_logo.png
+ihp_logo2.png

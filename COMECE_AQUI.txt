@@ -5,14 +5,6 @@
 ╚═══════════════════════════════════════════════════════════╝
 
 
-🚀 COMECE AQUI (30 SEGUNDOS):
-
-1. code .
-2. Clique direito em: web/index.html
-3. Open with Live Server
-4. Pronto! ✓
-
-
 📊 O QUE TEMOS:
 
 ✓ 20 Espécies catalogadas
@@ -47,8 +39,6 @@ bioacustica_sa/
 │   └── imagens_especies/     (21 fotos)
 │
 ├── index.html                (teste local)
-├── PRONTO_PARA_USAR.md       (instruções)
-├── RELATORIO_FINAL.txt       (detalhes técnicos)
 └── organizar_projeto.py      (limpeza)
 
 

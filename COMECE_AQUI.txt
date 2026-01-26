@@ -13,10 +13,10 @@
 4. Pronto! ✓
 
 
-📊 O QUE VOCÊ TEM:
+📊 O QUE TEMOS:
 
-✓ 21 Espécies catalogadas
-✓ 4 Pontos de mapa
+✓ 20 Espécies catalogadas
+✓ 2 Pontos de mapa
 ✓ 378 Áudios MP3
 ✓ 21 Fotos de alta qualidade
 ✓ Player de áudio com Waveform (tipo SoundCloud)
@@ -97,44 +97,3 @@ Interface:
   ✓ Modal ao clicar em espécie
   ✓ Waveform player com áudio
   ✓ Mapa com pontos
-
-
-🌐 DEPLOY EM PRODUÇÃO:
-
-GitHub Pages:
-  Faça push para GitHub
-  Settings → Pages → Deploy from main /web
-  URL: https://seu-usuario.github.io/repo/
-
-Netlify:
-  1. Conecte seu repositório GitHub
-  2. Build command: (deixe vazio)
-  3. Publish directory: web
-  4. Deploy!
-
-Vercel:
-  Similar ao Netlify
-
-
-📞 SUPORTE:
-
-Dúvida: Veja RELATORIO_FINAL.txt
-Técnico: Veja PRONTO_PARA_USAR.md
-Limpeza: Execute organizar_projeto.py
-
-
-🎉 TUDO PRONTO!
-
-Sua aplicação está 100% funcional e pronta para:
-  ✓ Teste local
-  ✓ Deploy em servidor
-  ✓ Compartilhamento
-  ✓ Produção
-
-Bom uso! 🎵🌍
-
-═══════════════════════════════════════════════════════════
-Data: 20 de Janeiro de 2026
-Status: ✅ OPERACIONAL
-Version: 2.0 FINAL
-═══════════════════════════════════════════════════════════

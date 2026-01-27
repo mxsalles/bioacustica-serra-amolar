@@ -14,10 +14,8 @@
     <style>
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
-        /* Ajuste para o mapa não sobrepor o modal */
         #map { z-index: 1; border-radius: 8px; }
         
-        /* Estilização do player e cards */
         #waveform-spectrogram {
             height: 128px;
             border-radius: 8px;
@@ -26,7 +24,6 @@
         .card-hover { transition: all 0.3s ease; }
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         
-        /* Badges e Botões */
         .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
         .badge-green { background: #d1fae5; color: #065f46; }
         .badge-blue { background: #dbeafe; color: #1e40af; }
@@ -83,11 +80,14 @@
                 <button onclick="filtrar('Insetos')" class="categoria-btn bg-white text-gray-700 border-2 border-gray-300 py-2 px-6 rounded-lg font-semibold" data-categoria="Insetos">
                     Insetos
                 </button>
+                <button onclick="filtrar('Sons da Serra')" class="categoria-btn bg-white text-gray-700 border-2 border-gray-300 py-2 px-6 rounded-lg font-semibold" data-categoria="Sons da Serra">
+                    Sons da Serra
+                </button>
             </div>
         </div>
 
         <div id="grid-especies" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            </div>
+        </div>
 
         <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
             <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -111,18 +111,20 @@
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <p id="modal-cientifico" class="text-lg text-green-600 italic mb-4"></p>
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
+                            
+                            <div id="box-status" class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
                                 <p class="text-xs font-semibold text-blue-900 mb-1">Status de Conservação</p>
                                 <p id="modal-status" class="text-blue-700 font-semibold text-sm"></p>
                             </div>
-                            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-4 rounded">
+
+                            <div id="box-pontos" class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-4 rounded">
                                 <p class="text-xs font-semibold text-amber-900 mb-1">Pontos de Registro</p>
                                 <p id="modal-ocorrencias" class="text-amber-700 font-semibold text-sm"></p>
                             </div>
                         </div>
 
                         <div id="audio-section" class="hidden">
-                            <h4 class="text-sm font-bold text-gray-800 mb-2">🎧 Vocalização</h4>
+                            <h4 id="titulo-audio" class="text-sm font-bold text-gray-800 mb-2">🎧 Vocalização</h4>
                             <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                                 <div id="waveform-spectrogram" style="height: 128px; background: #ffffff; border-radius: 8px; position: relative; border: 1px solid #e5e7eb;"></div>
 
@@ -151,8 +153,8 @@
                         </div>
                     </div>
 
-                    <div class="mb-6">
-                        <h3 class="text-lg font-bold text-gray-800 mb-3">Sobre a Espécie</h3>
+                    <div id="sobre-section" class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">Sobre</h3>
                         <p id="modal-descricao" class="text-gray-700 leading-relaxed text-sm"></p>
                     </div>
                 </div>
@@ -192,7 +194,8 @@
             'Anfibios': 'Anfíbios',
             'Mamiferos': 'Mamíferos',
             'Insetos': 'Insetos',
-            'Aves': 'Aves'
+            'Aves': 'Aves',
+            'Sons da Serra': 'Sons da Serra'
         };
 
         async function carregarDados() {
@@ -233,7 +236,7 @@
             if (especiesLista.length === 0) {
                 grid.innerHTML = `
                     <div class="col-span-full text-center p-12 bg-amber-50 rounded-lg">
-                        <p class="text-amber-700 font-bold text-lg">Nenhuma espécie encontrada nesta categoria</p>
+                        <p class="text-amber-700 font-bold text-lg">Nenhum registro encontrado nesta categoria</p>
                     </div>
                 `;
                 return;
@@ -244,6 +247,11 @@
                 card.className = 'card-hover bg-white rounded-xl shadow-md overflow-hidden cursor-pointer';
                 card.onclick = () => abrirModal(especie);
 
+                // Lógica para esconder nome científico no card
+                const isAmbient = especie.classe === 'Sons da Serra';
+                const nomeCientificoHtml = isAmbient ? '' : `<p class="text-sm text-green-600 italic mb-3">${especie.nomeCientifico}</p>`;
+                const badgePontosHtml = isAmbient ? `<span class="badge badge-blue">Localização</span>` : `<span class="badge badge-blue">${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos</span>`;
+
                 card.innerHTML = `
                     <div class="h-56 bg-gray-200 overflow-hidden">
                         ${especie.imagemUrl ?
@@ -253,9 +261,9 @@
                     </div>
                     <div class="p-5">
                         <h3 class="font-bold text-lg text-gray-900 mb-1">${especie.nomePopular}</h3>
-                        <p class="text-sm text-green-600 italic mb-3">${especie.nomeCientifico}</p>
+                        ${nomeCientificoHtml}
                         <div class="flex gap-2 flex-wrap">
-                            <span class="badge badge-blue">${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos de gravação</span>
+                            ${badgePontosHtml}
                             ${especie.audioUrl ? '<span class="badge badge-green">Áudio</span>' : ''}
                         </div>
                     </div>
@@ -284,12 +292,19 @@
         function abrirModal(especie) {
             especieSelecionada = especie;
             
+            // Variável de controle
+            const isAmbient = especie.classe === 'Sons da Serra';
+
+            // Elementos DOM
+            const elTituloAudio = document.getElementById('titulo-audio');
+            const elSobreSection = document.getElementById('sobre-section');
+            const elCientifico = document.getElementById('modal-cientifico');
+            const boxStatus = document.getElementById('box-status');
+            const boxPontos = document.getElementById('box-pontos');
+            const mapSection = document.getElementById('map-section');
+
+            // 1. Título e Imagem (Sempre tem)
             document.getElementById('modal-titulo').textContent = especie.nomePopular;
-            document.getElementById('modal-cientifico').textContent = `${especie.nomeCientifico}`;
-            document.getElementById('modal-status').textContent = statusConservacao[especie.statusConservacao] || especie.statusConservacao;
-            document.getElementById('modal-ocorrencias').textContent = `${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos de gravação`;
-            document.getElementById('modal-descricao').textContent = especie.descricao;
-            
             const img = document.getElementById('modal-imagem');
             if (especie.imagemUrl) {
                 img.src = especie.imagemUrl;
@@ -298,6 +313,36 @@
                 img.style.display = 'none';
             }
 
+            // 2. Título do Áudio (Muda o texto)
+            elTituloAudio.textContent = isAmbient ? '🎧 Som Ambiente' : '🎧 Vocalização';
+
+            // 3. Controle de Exibição (Show/Hide)
+            if (isAmbient) {
+                // Modo SOM DA SERRA
+                elCientifico.style.display = 'none'; // Esconde nome científico
+                boxStatus.style.display = 'none';    // Esconde status conservação
+                elSobreSection.style.display = 'none'; // Esconde seção Sobre
+                
+                // Mantém pontos
+                boxPontos.style.display = 'block';
+                document.getElementById('modal-ocorrencias').textContent = `${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos de registro`;
+
+            } else {
+                // Modo ANIMAIS (Normal)
+                elCientifico.style.display = 'block';
+                elCientifico.textContent = especie.nomeCientifico;
+                
+                boxStatus.style.display = 'block';
+                document.getElementById('modal-status').textContent = statusConservacao[especie.statusConservacao] || especie.statusConservacao;
+
+                elSobreSection.style.display = 'block';
+                document.getElementById('modal-descricao').textContent = especie.descricao;
+                
+                boxPontos.style.display = 'block';
+                document.getElementById('modal-ocorrencias').textContent = `${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos de gravação`;
+            }
+
+            // 4. Player de Áudio
             const audioSection = document.getElementById('audio-section');
             if (especie.audioUrl) {
                 audioSection.classList.remove('hidden');
@@ -306,7 +351,7 @@
                 audioSection.classList.add('hidden');
             }
 
-            const mapSection = document.getElementById('map-section');
+            // 5. Mapa (Mantido para ambos se houver pontos)
             if (especie.pontosRegistro && especie.pontosRegistro.length > 0) {
                 mapSection.classList.remove('hidden');
                 setTimeout(() => inicializarMapa(especie), 100);

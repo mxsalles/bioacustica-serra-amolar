@@ -331,6 +331,18 @@
         "76"
       ],
       "ocorrencias": 20
+    },
+    {
+      "id": "chuva_som",
+      "nomePopular": "Chuva",
+      "nomeCientifico": "Sons da Serra",
+      "classe": "Sons da Serra",
+      "descricao": "",
+      "imagemUrl": "imagens_especies/baia-serra.jpeg",
+      "audioUrl": "audio_especies/chuva.mp3",
+      "pontosRegistro": [
+        "76"
+      ]
     }
   ]
 }

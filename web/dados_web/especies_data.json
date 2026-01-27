@@ -158,7 +158,7 @@
       "statusConservacao": "LC",
       "descricao": "Leptodactylus podicipinus é uma espécie de anfíbio  da família Leptodactylidae.",
       "imagemUrl": "imagens_especies/leptodactylus_podicipinus.jpg",
-      "audioUrl": "audio_especies/leptodactylus_podicipinus.mp3",
+      "audioUrl": "audio_especies/-.mp3",
       "pontosRegistro": [
         "76"
       ],
@@ -191,20 +191,6 @@
         "76"
       ],
       "ocorrencias": 17
-    },
-    {
-      "id": "nyctibius_griseus",
-      "nomePopular": "Urutau-comum",
-      "nomeCientifico": "Nyctibius griseus",
-      "classe": "Aves",
-      "statusConservacao": "LC",
-      "descricao": "O urutau ou urutau-comum (Nyctibius griseus) é uma ave noturna pertencente à família Nyctibiidae. Foi descrita pela primeira vez pelo naturalista Johann Friedrich Gmelin com base em espécimes coletados nas Américas e enviados para a Europa, já que o autor nunca visitou o continente americano pessoal...",
-      "imagemUrl": "imagens_especies/nyctibius_griseus.png",
-      "audioUrl": "audio_especies/nyctibius_griseus.mp3",
-      "pontosRegistro": [
-        "76"
-      ],
-      "ocorrencias": 2
     },
     {
       "id": "nyctidromus_albicollis",
@@ -298,7 +284,7 @@
       "statusConservacao": "LC",
       "descricao": "O bacurau-chintã ou bacurau-pequeno (Setopagis parvula) é uma espécie de bacurau que habita da Venezuela à Bolívia,  bem como a Argentina e o Brasil. Tais aves medem cerca de 20 cm de comprimento, possuindo coloração escura, garganta com manchas negras e brancas, asas com largas faixas brancas, e ca...",
       "imagemUrl": "imagens_especies/setopagis_parvula.jpg",
-      "audioUrl": "audio_especies/setopagis_parvula.mp3",
+      "audioUrl": "audio_especies/-.mp3",
       "pontosRegistro": [
         "76"
       ],

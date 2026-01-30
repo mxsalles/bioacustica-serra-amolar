@@ -221,6 +221,20 @@
       "ocorrencias": 422
     },
     {
+      "id": "panthera_onca",
+      "nomePopular": "Onça-pintada",
+      "nomeCientifico": "Panthera onca",
+      "classe": "Mamíferos",
+      "statusConservacao": "VU",
+      "descricao": "Panthera onca é uma espécie de mamífero da família Felidae. É o maior felino do continente americano e é conhecido como onça-pintada.",
+      "imagemUrl": "imagens_especies/onca.jpeg",
+      "audioUrl": "audio_especies/panthera_onca.mp3",
+      "pontosRegistro": [
+        "76"
+      ],
+      "ocorrencias": 12
+    },
+    {
       "id": "plecturocebus_pallescens",
       "nomePopular": "Macaco-boca-d'água",
       "nomeCientifico": "Plecturocebus pallescens",

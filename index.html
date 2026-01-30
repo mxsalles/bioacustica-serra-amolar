@@ -112,9 +112,9 @@
                         <div>
                             <p id="modal-cientifico" class="text-lg text-green-600 italic mb-4"></p>
                             
-                            <div id="box-status" class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4 rounded">
-                                <p class="text-xs font-semibold text-blue-900 mb-1">Status de Conservação</p>
-                                <p id="modal-status" class="text-blue-700 font-semibold text-sm"></p>
+                            <div id="box-status" class="border-l-4 p-4 mb-4 rounded">
+                                <p id="status-label" class="text-xs font-semibold mb-1">Status de Conservação</p>
+                                <p id="modal-status" class="font-semibold text-sm"></p>
                             </div>
 
                             <div id="box-pontos" class="bg-amber-50 border-l-4 border-amber-500 p-4 mb-4 rounded">
@@ -190,6 +190,52 @@
             'NA': 'Não Avaliado'
         };
 
+        // --- CONFIGURAÇÃO DE CORES DOS STATUS ---
+        // Define as classes do Tailwind para cada status
+        const coresStatus = {
+            // Padrão (LC) - Azul
+            'LC': { 
+                box: 'bg-blue-50 border-blue-500', 
+                label: 'text-blue-900', 
+                valor: 'text-blue-700' 
+            },
+            // NT (Amarelada/Âmbar)
+            'NT': { 
+                box: 'bg-amber-50 border-amber-500', 
+                label: 'text-amber-900', 
+                valor: 'text-amber-700' 
+            },
+            // VU (Vermelha)
+            'VU': { 
+                box: 'bg-red-50 border-red-500', 
+                label: 'text-red-900', 
+                valor: 'text-red-700' 
+            },
+            // EN (Vermelha)
+            'EN': { 
+                box: 'bg-red-50 border-red-500', 
+                label: 'text-red-900', 
+                valor: 'text-red-700' 
+            },
+            // CR (Vinho) - Usando Rose Escuro para simular vinho
+            'CR': { 
+                box: 'bg-rose-100 border-rose-900', 
+                label: 'text-rose-950', 
+                valor: 'text-rose-900' 
+            },
+            // DD e NA (Cinza)
+            'DD': { 
+                box: 'bg-gray-100 border-gray-500', 
+                label: 'text-gray-900', 
+                valor: 'text-gray-700' 
+            },
+            'NA': { 
+                box: 'bg-gray-100 border-gray-500', 
+                label: 'text-gray-900', 
+                valor: 'text-gray-700' 
+            }
+        };
+
         const classesCorrigidas = {
             'Anfibios': 'Anfíbios',
             'Mamiferos': 'Mamíferos',
@@ -247,7 +293,6 @@
                 card.className = 'card-hover bg-white rounded-xl shadow-md overflow-hidden cursor-pointer';
                 card.onclick = () => abrirModal(especie);
 
-                // Lógica para esconder nome científico no card
                 const isAmbient = especie.classe === 'Sons da Serra';
                 const nomeCientificoHtml = isAmbient ? '' : `<p class="text-sm text-green-600 italic mb-3">${especie.nomeCientifico}</p>`;
                 const badgePontosHtml = isAmbient ? `<span class="badge badge-blue">Localização</span>` : `<span class="badge badge-blue">${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos</span>`;
@@ -292,7 +337,6 @@
         function abrirModal(especie) {
             especieSelecionada = especie;
             
-            // Variável de controle
             const isAmbient = especie.classe === 'Sons da Serra';
 
             // Elementos DOM
@@ -300,10 +344,12 @@
             const elSobreSection = document.getElementById('sobre-section');
             const elCientifico = document.getElementById('modal-cientifico');
             const boxStatus = document.getElementById('box-status');
+            const statusLabel = document.getElementById('status-label');
+            const statusValor = document.getElementById('modal-status');
             const boxPontos = document.getElementById('box-pontos');
             const mapSection = document.getElementById('map-section');
 
-            // 1. Título e Imagem (Sempre tem)
+            // 1. Título e Imagem
             document.getElementById('modal-titulo').textContent = especie.nomePopular;
             const img = document.getElementById('modal-imagem');
             if (especie.imagemUrl) {
@@ -313,28 +359,35 @@
                 img.style.display = 'none';
             }
 
-            // 2. Título do Áudio (Muda o texto)
             elTituloAudio.textContent = isAmbient ? '🎧 Som Ambiente' : '🎧 Vocalização';
 
-            // 3. Controle de Exibição (Show/Hide)
             if (isAmbient) {
-                // Modo SOM DA SERRA
-                elCientifico.style.display = 'none'; // Esconde nome científico
-                boxStatus.style.display = 'none';    // Esconde status conservação
-                elSobreSection.style.display = 'none'; // Esconde seção Sobre
+                elCientifico.style.display = 'none'; 
+                boxStatus.style.display = 'none';    
+                elSobreSection.style.display = 'none';
                 
-                // Mantém pontos
                 boxPontos.style.display = 'block';
                 document.getElementById('modal-ocorrencias').textContent = `${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos de registro`;
 
             } else {
-                // Modo ANIMAIS (Normal)
                 elCientifico.style.display = 'block';
                 elCientifico.textContent = especie.nomeCientifico;
                 
+                // --- LÓGICA DE CORES DO STATUS ---
                 boxStatus.style.display = 'block';
-                document.getElementById('modal-status').textContent = statusConservacao[especie.statusConservacao] || especie.statusConservacao;
+                
+                // Pega o código do status (ex: NT, VU) ou usa LC como fallback
+                const code = especie.statusConservacao;
+                const estilo = coresStatus[code] || coresStatus['LC'];
 
+                // Aplica as classes dinamicamente
+                boxStatus.className = `border-l-4 p-4 mb-4 rounded ${estilo.box}`;
+                statusLabel.className = `text-xs font-semibold mb-1 ${estilo.label}`;
+                statusValor.className = `font-semibold text-sm ${estilo.valor}`;
+                
+                statusValor.textContent = statusConservacao[code] || code;
+
+                // Restante dos dados
                 elSobreSection.style.display = 'block';
                 document.getElementById('modal-descricao').textContent = especie.descricao;
                 
@@ -342,7 +395,7 @@
                 document.getElementById('modal-ocorrencias').textContent = `${especie.pontosRegistro ? especie.pontosRegistro.length : 0} pontos de gravação`;
             }
 
-            // 4. Player de Áudio
+            // Player
             const audioSection = document.getElementById('audio-section');
             if (especie.audioUrl) {
                 audioSection.classList.remove('hidden');
@@ -351,7 +404,7 @@
                 audioSection.classList.add('hidden');
             }
 
-            // 5. Mapa (Mantido para ambos se houver pontos)
+            // Mapa
             if (especie.pontosRegistro && especie.pontosRegistro.length > 0) {
                 mapSection.classList.remove('hidden');
                 setTimeout(() => inicializarMapa(especie), 100);
@@ -382,7 +435,6 @@
             container.innerHTML = '';
 
             try {
-                // Waveform AZUL com fundo BRANCO
                 wavesurfer = WaveSurfer.create({
                     container: '#waveform-spectrogram',
                     waveColor: ['#1e3a8a', '#1d4ed8', '#3b82f6', '#93c5fd'], 
@@ -449,16 +501,13 @@
             const mapContainer = document.getElementById('map');
             if (mapaAtual) mapaAtual.remove();
             
-            // Focando aproximadamente no Pantanal
             mapaAtual = L.map(mapContainer).setView([-19.225, -56.423], 11);
             
-            // Satélite
             L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 attribution: 'Tiles &copy; Esri',
                 maxZoom: 18
             }).addTo(mapaAtual);
 
-            // Adicionar marcadores baseados na lista de IDs da espécie
             const puntosRegistro = dados.pontos.filter(p => especie.pontosRegistro.includes(p.id));
             
             puntosRegistro.forEach(ponto => {
